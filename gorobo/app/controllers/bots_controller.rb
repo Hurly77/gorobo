@@ -15,7 +15,6 @@ class BotsController < ApplicationController
   post "/bots" do
     params.delete_if {|p| p == "submit"}
     @bots = Bot.create(:name => params[:name], :group => params[:group], :tasks => params[:tasks], :skill_level => params[:skill_level], :cost => params[:cost], :instructions => params[:instructions])
-    binding.pry
     redirect to "/bots"
   end
 
