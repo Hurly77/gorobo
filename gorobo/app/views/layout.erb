@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<link rel="icon" href="https://vignette.wikia.nocookie.net/ratchet/images/3/33/Gadge-Bot_promo_render.png/revision/latest?cb=20180807155921" type="image/gif">
+    <title>Gorobo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+  <header>
+    <h1 id="web_name">GoRobo</h>
+    <%if logged_in?%>
+    <%@builder = Builder.find_by(params[:builder_id])%>
+    <p>
+      <script>function visithome(){window.location='/builders/<%=@builder.id%>';}</script>
+      <button class="button" onclick="visithome();">Lu-bore-a-tory</button>
+    </p>
+    <p>
+      <script>function visitedit(){window.location='/builders/<%=@builder.id%>/edit';}</script>
+      <button class="button" onclick="visitedit();">edit Builder</button>
+    </p>
+    <p>
+      <script>function visitPage(){window.location='/logout';}</script>
+      <button class="button" onclick="visitPage();">logout</button>
+    </p>
+    <%end%>
+  </header>
+  <body>
+  <%@builder = Builder.find_by(params[:builder_id])%>
+    <div class="wrapper">
+
+        <%= yield %>
+
+      <footer class="branding">
+        <small>&copy; 2020 <strong>Gorobo</strong></small>
+      </footer>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <!--[if lt IE 7]>
+      <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
+      <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+    <![endif]-->
+  </body>
+</html>

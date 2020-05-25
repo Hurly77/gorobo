@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/stylesheets/signup_sheet.css">
+<script>function submitEdit(){window.location='/builders/<%=@builder.id%>/edit';}</script>
+<script>function editBuilder() {document.getElementById("edit").style.display = "block";}</script>
+<style>
+#panel, .flip {
+  font-size: 16px;
+  padding: 10px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+  border: solid 1px #a6d8a8;
+  margin: auto;
+}
+
+ #edit{
+  display: none;
+}
+</style>
+
+<%@builder.attributes.except("id", "password_digest", "created_at", "updated_at").each do |key, value|%>
+<li><strong><%="#{key}"%></strong></li><li><%="#{value}"%></li><br><%end%>
+
+<form id="edit" type="hidden" action="/builders/<%=@builder.id%>" method="post">
+<br>
+<% @builder.attributes.except("id", "password_digest", "created_at", "updated_at").each do |key, value|%>
+<input id="hidden" type="hidden" name="_method" value="patch">
+<br>
+<input id="<%=key%>" type="text" name="<%=key%>" value="<%=value%>">
+<%end%>
+<input id="hidden" type="hidden" name="_method" value="patch">
+<br>
+<input id="password" type="password" name="password" value="<%=@builder.password_digest%>">
+<button onclick="editBuilder()">edit</button>
+
+<input id="submit" type="submit" value="Save">
+</form>
+
+<button onclick="editBuilder()">edit</button>
+
+
