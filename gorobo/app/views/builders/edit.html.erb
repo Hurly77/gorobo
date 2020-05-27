@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/signup_sheet.css">
 <script>function submitEdit(){window.location='/builders/<%=@builder.id%>/edit';}</script>
 <script>function editBuilder() {document.getElementById("edit").style.display = "block";}</script>
+<script>function deleteBuilder() {document.location'/builders/<%=@builder.id%>/delete'}</script>
 <style>
 #panel, .flip {
   font-size: 16px;
@@ -29,12 +30,13 @@
 <%end%>
 <input id="hidden" type="hidden" name="_method" value="patch">
 <br>
-<input id="password" type="password" name="password" value="<%=@builder.password_digest%>">
-<button onclick="editBuilder()">edit</button>
+<input id="password" type="password" name="password" value="<%=@builder.password%>">
 
 <input id="submit" type="submit" value="Save">
 </form>
-
 <button onclick="editBuilder()">edit</button>
 
-
+<form type="hidden" action="/builders/<%= @builder.id%>/delete" method="post">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <button id="delete" type="submit" name="submit" value="delete">delete</button>
+ </form>
