@@ -1,2 +1,9 @@
 <h1>This is the Model's index page.</h1>
-<%=@bots%>
+<h1>This is the show page for an individual instance of your model.</h1>
+ <%@builder = Builder.find_by(session[:builder_id])%>
+<%@builder.bots.each do |bot|%>
+<ul>
+<li><%=bot.name%></li>
+</ul>
+
+<%end%>
