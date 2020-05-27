@@ -11,22 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200521003714) do
+ActiveRecord::Schema.define(version: 20200521003141) do
 
   create_table "bots", force: :cascade do |t|
-    t.string  "name"
-    t.string  "group"
-    t.string  "tasks"
-    t.string  "skill_level"
-    t.integer "cost"
-    t.string  "instructions"
-  end
-
-  create_table "builder_bots", force: :cascade do |t|
+    t.string   "name"
+    t.string   "group"
+    t.string   "tasks"
+    t.string   "skill_level"
+    t.integer  "cost"
+    t.string   "instructions"
     t.integer  "builder_id"
-    t.integer  "bot_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "builders", force: :cascade do |t|

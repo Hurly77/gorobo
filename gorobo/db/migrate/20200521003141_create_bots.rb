@@ -7,6 +7,8 @@ class CreateBots < ActiveRecord::Migration
       t.string :skill_level
       t.integer :cost 
       t.string :instructions
+      t.integer :builder_id
+      t.timestamps null: false
     end
   end
 end
