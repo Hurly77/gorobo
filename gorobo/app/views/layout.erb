@@ -14,7 +14,7 @@
   <header>
     <h1 id="web_name">GoRobo</h>
     <%if logged_in?%>
-    <%@builder = Builder.find_by(params[:builder_id])%>
+    <%@builder = Builder.find_by(session[:builder_id])%>
     <p>
       <script>function visithome(){window.location='/builders/<%=@builder.id%>';}</script>
       <button class="button" onclick="visithome();">Lu-bore-a-tory</button>
