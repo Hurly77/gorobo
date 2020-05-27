@@ -7,6 +7,5 @@ end
 #help us run our controllers.
 use Rack::MethodOverride 
 run ApplicationController
-use BuilderBotsController
 use BotsController
 use BuildersController
