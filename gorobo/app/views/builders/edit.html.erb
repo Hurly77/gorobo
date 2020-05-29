@@ -16,22 +16,46 @@
  #edit{
   display: none;
 }
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+  width: 75%;
+  margin-left: 10%;
+  margin-bottom: center;
+}
+
+th, td {
+  text-align: left;
+  padding: 5px;
+  
+}
+
+tr:nth-child(even){background-color: #1f2833
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
 </style>
-
-<%@builder.attributes.except("id", "password_digest", "created_at", "updated_at").each do |key, value|%>
-<li><strong><%="#{key}"%></strong></li><li><%="#{value}"%></li><br><%end%>
-
+<table>
+  <%@builder.attributes.except("id", "password_digest", "created_at", "updated_at").each do |key, value|%>
+    <tr>
+      <td><%="#{key}"%></td>
+      <td><%="#{value}"%></td>
+    </tr>
+  <%end%>
+</table>
 <form id="edit" type="hidden" action="/builders/<%=@builder.id%>" method="post">
 <br>
 <% @builder.attributes.except("id", "password_digest", "created_at", "updated_at").each do |key, value|%>
 <input id="hidden" type="hidden" name="_method" value="patch">
 <br>
-<input id="<%=key%>" type="text" name="<%=key%>" value="<%=value%>">
+<label for="<%=key%>"><%=key%></label><input id="<%=key%>" type="text" name="<%=key%>" value="<%=value%>">
 <%end%>
 <input id="hidden" type="hidden" name="_method" value="patch">
 <br>
-<input id="password" type="password" name="password" value="<%=@builder.password%>">
-
 <input id="submit" type="submit" value="Save">
 </form>
 <button onclick="editBuilder()">edit</button>
