@@ -1,9 +1,36 @@
-<h1>This is the show page for an individual instance of your model.</h1>
- <%@bot = Bot.find_by(params[:id])%>
- 
- <%=@bot.name%><br>
- <%=@bot.group%><br>
- <%=@bot.tasks%><br>
- <%=@bot.skill_level%><br>
- <%=@bot.cost%><br>
- <%=@bot.instructions%><br>
+  <style>
+table {
+  border-collapse: collapse;
+  text-align: center;
+  width: 75%;
+  margin-left: 10%;
+  margin-bottom: center;
+}
+
+th, td {
+  text-align: left;
+  padding: 5px;
+  
+}
+
+tr:nth-child(even){background-color: #1f2833
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+  <table>
+    <tr>
+      <td><%=@bot.name.upcase%></td>
+    </tr>
+    <%@bot.attributes.except("id", "builder_id", "created_at", "updated_at", "name").each do |k, v| %>
+       <tr>
+        <td><%=k%>:</td>
+        <td><%=v%></td>
+       </tr>
+    <%end%>
+  </table>
+    <script>function editPage(){window.location='/bots/<%=@bot.id%>/edit';}</script>
+    <button class="button" onclick="editPage();">edit</button>
