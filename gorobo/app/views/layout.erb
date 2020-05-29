@@ -6,33 +6,41 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-<link rel="icon" href="https://vignette.wikia.nocookie.net/ratchet/images/3/33/Gadge-Bot_promo_render.png/revision/latest?cb=20180807155921" type="image/gif">
+    <link rel="icon" href="https://vignette.wikia.nocookie.net/ratchet/images/3/33/Gadge-Bot_promo_render.png/revision/latest?cb=20180807155921" type="image/gif">
     <title>Gorobo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/main.css" />
   </head>
-  <header>
-    <h1 id="web_name">GoRobo</h>
+  <body>
+    <div class="header">
+      <h1>Go<span>Robo</span></h>
+    </div>
     <%if logged_in?%>
-    <%@builder = Builder.find_by(session[:builder_id])%>
-    <p>
+    <div class="topnav">
+    <%@builder = current_builder%>
       <script>function visithome(){window.location='/builders/<%=@builder.id%>';}</script>
       <button class="button" onclick="visithome();">Lu-bore-a-tory</button>
-    </p>
-    <p>
       <script>function visitedit(){window.location='/builders/<%=@builder.id%>/edit';}</script>
       <button class="button" onclick="visitedit();">edit Builder</button>
-    </p>
-    <p>
       <script>function visitPage(){window.location='/logout';}</script>
       <button class="button" onclick="visitPage();">logout</button>
-    </p>
-    <%end%>
-  </header>
-  <body>
-  <%@builder = Builder.find_by(params[:builder_id])%>
+    </div>
+   <%end%>
     <div class="wrapper">
-
+       <% if flash[:message] %>
+        <div class="flash_message" style="color:red;">
+          <% flash.each do |m,err| %>
+            <%= "#{err}"%>
+            <%end%>
+        </div>
+      <% end %>
+       <% if flash[:success] %>
+        <div class="flash_message" style="color:white;">
+          <% flash.each do |m, suc| %>
+            <%= "#{suc}"%>
+            <%end%>
+        </div>
+      <% end %>
         <%= yield %>
 
       <footer class="branding">
