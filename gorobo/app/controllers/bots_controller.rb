@@ -2,7 +2,7 @@ class BotsController < ApplicationController
 
   # GET: /bots
   get "/bots" do
-    @bots = Bot.all
+  @bots = current_builder.bots.all
     erb :"/bots/index.html"
   end
 
@@ -14,33 +14,66 @@ class BotsController < ApplicationController
   # POST: /bots
   post "/bots" do
     params.delete_if {|p| p == "submit"}
-    @bot = Bot.create(:name => params[:name], :group => params[:group], :tasks => params[:tasks], :skill_level => params[:skill_level], :cost => params[:cost], :instructions => params[:instructions])
-     if !current_builder.bots.ids.include?(@bot.id)
+    if !Bot.find_by(name: params[:name])
+      @bot = Bot.new(params)
+      @bot.save
       current_builder.bots << @bot
       current_builder.save
-     end
-     binding.pry
-    redirect to "/bots/#{@bot.id}"
+
+      flash[:success] = "It's Alive!!!"
+      redirect to "/bots/#{@bot.id}"
+     else
+      flash[:message] = "you already made that bot"
+      redirect to "/bots"
+    end
+    
   end
 
   # GET: /bots/5
   get "/bots/:id" do
+    if current_builder
+    @bot = Bot.find(params[:id])
     erb :"/bots/show.html"
+    
+  else 
+    redirect "/"
+    end
   end
 
   # GET: /bots/5/edit
   get "/bots/:id/edit" do
+    @bot = Bot.find_by(params)
     erb :"/bots/edit.html"
   end
 
   # PATCH: /bots/5
   patch "/bots/:id" do
-    redirect "/bots/:id"
+    
+    @bot = Bot.find(params[:id])
+    if current_builder
+      @bot.name = params[:name]
+      @bot.group = params[:group]
+      @bot.tasks = params[:tasks]
+      @bot.skill_level = params[:skill_level]
+      @bot.cost = params[:cost]
+      @bot.instructions = params[:instructions]
+      @bot.save
+      redirect to "/bots"
+    else
+
+      redirect to "/"
+    end
   end
 
-  # DELETE: /bots/5/delete
   delete "/bots/:id/delete" do
-    redirect "/bots"
+    if current_builder.bot_ids.include?(params[:id])
+      @bot = Bot.find(params[:id])
+      @bot.destroy
+
+    redirect "/builders/#{current_builder.id}"
+    else
+      redirect to '/'
+    end
   end
 
 end
