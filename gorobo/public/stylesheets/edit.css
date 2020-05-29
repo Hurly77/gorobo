@@ -29,6 +29,3 @@ button[type=submit] {
 button[type=submit]:hover {
   background-color:rgb(209, 28, 28)
 }
-h1::first-letter {
-  color:#00F2FF;
-}
