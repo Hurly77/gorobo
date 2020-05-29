@@ -14,9 +14,11 @@ class BuildersController < ApplicationController
     if @builder.save
       session[:builder_id] = @builder.id
 
+      flash[:success] = "Welcome #{@builder.user_name} to the World of GoRobo!!"
       redirect to "/builders/#{@builder.id}"
     else 
-      redirect to '/'
+      flash[:message] = "NO FIELDS CAN BE BLANK"
+      redirect to '/signup'
     end
   end
 
@@ -34,9 +36,11 @@ class BuildersController < ApplicationController
     if @builder && @builder.authenticate(params[:password])
       session[:builder_id] = @builder.id
 
+      flash[:success] = "welcome back #{@builder.name}"
       redirect to "/builders/#{@builder.id}"
      else
-      redirect to '/'
+      flash[:message] = "Password or builder name is invalid"
+      redirect to '/login'
     end
   end
 
@@ -48,21 +52,21 @@ class BuildersController < ApplicationController
   end
 
   get "/builders" do
-    @builder = Builder.find_by(params[:builder_id])
+    @builder = current_builder
 
     redirect to "/builders/#{@builder.id}"
   end
 
   # GET: /builders/5
   get "/builders/:id" do
-    @builder = Builder.find_by_id(params[:builder_id])
+    @builder = current_builder
 
     erb :"/builders/show.html"
   end
 
   # GET: /builders/5/edit
   get "/builders/:id/edit" do
-    @builder = Builder.find_by(params[:builder_id])
+    @builder = current_builder
 
 
     erb :"/builders/edit.html"
@@ -70,20 +74,21 @@ class BuildersController < ApplicationController
 
   # PATCH: /builders/5
   patch "/builders/:id" do
-    @builder = Builder.find_by(params[:builder_id])
+    @builder = current_builder
     @builder.name
     @builder.user_name
     @builder.email
-    @builder.password
     @builder.save
     redirect "/builders/#{@builder.id}"
   end
 
   # DELETE: /builders/5/delete
   delete "/builders/:id/delete" do
-    
-    current_builder.destroy
+      flash[:success] = "CONGRATS you just deleted #{current_builder.user_name}"
+    if current_builder
+      current_builder.destroy
     session.clear
     redirect "/"
   end
+end
 end
