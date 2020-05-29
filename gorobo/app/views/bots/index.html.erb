@@ -1,9 +1,37 @@
-<h1>This is the Model's index page.</h1>
-<h1>This is the show page for an individual instance of your model.</h1>
- <%@builder = Builder.find_by(session[:builder_id])%>
-<%@builder.bots.each do |bot|%>
-<ul>
-<li><%=bot.name%></li>
-</ul>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
 
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #1f2833}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+<%if @bots.empty?%>
+<%="You have no bots,"%>
+    <script>function myBots(){window.location='/bots/new';}</script>
+    <%="click here to "%><button onclick="myBots();">Create bot</button>
 <%end%>
+<table>
+  <%current_builder.bots.each do |bot| bot%>
+    <tr>
+    <td>
+        <script>function myBots<%=bot.id%>(){window.location='/bots/<%=bot.id%>';}</script>
+        <button onclick="myBots<%=bot.id%>();">View</button>
+      </td>
+      <td>
+        <label for="bot name"><%=bot.name.capitalize%></label><br>
+      </td>
+    </tr>
+  <%end%>
+  
+</table>
