@@ -50,7 +50,7 @@ class BotsController < ApplicationController
   patch "/bots/:id" do
     
     @bot = Bot.find(params[:id])
-    if current_builder
+    if current_builder.bot_ids.include?(@bot.id)
       @bot.name = params[:name]
       @bot.group = params[:group]
       @bot.tasks = params[:tasks]
@@ -60,19 +60,21 @@ class BotsController < ApplicationController
       @bot.save
       redirect to "/bots"
     else
-
+      flash[:message] ="that is not yo bot baby"
       redirect to "/"
     end
   end
 
   delete "/bots/:id/delete" do
-    if current_builder.bot_ids.include?(params[:id])
-      @bot = Bot.find(params[:id])
+    @bot = Bot.find(params[:id])
+    if current_builder.bot_ids.include?(@bot.id)
       @bot.destroy
 
     redirect "/builders/#{current_builder.id}"
     else
-      redirect to '/'
+      flash[:message] = "FAILD!"
+
+      redirect "/builders/#{current_builder.id}"
     end
   end
 
