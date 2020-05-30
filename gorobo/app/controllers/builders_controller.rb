@@ -74,21 +74,27 @@ class BuildersController < ApplicationController
 
   # PATCH: /builders/5
   patch "/builders/:id" do
-    @builder = current_builder
-    @builder.name
-    @builder.user_name
-    @builder.email
-    @builder.save
+    @builder = Builder.find(params[:id])
+   if  @builder.save
+    flash[:message] = "yep"
+    redirect "/builders/#{@builder.id}"
+   else 
+    flash[:message] = "nope"
     redirect "/builders/#{@builder.id}"
   end
+end
 
   # DELETE: /builders/5/delete
   delete "/builders/:id/delete" do
-      flash[:success] = "CONGRATS you just deleted #{current_builder.user_name}"
+      flash[:success] = "CONGRATS you just deleted your builder"
     if current_builder
       current_builder.destroy
     session.clear
+    flash[:success] = "CONGRATS you just deleted your builder"
     redirect "/"
+    else 
+      redirect to "/builders/#{current_builder.id}"
+      flash[:message] = "this is not your account"
+    end
   end
-end
 end
